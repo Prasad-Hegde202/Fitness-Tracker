@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Fitness Tracker Statistics</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            padding-top: 80px; /* Space to avoid hiding under header */
+        }
+
+        /* Header Section Styles */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #1e1e1e;
+            border-bottom: 1px solid #333;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-icons i {
+            font-size: 24px;
+            color: #ffffff;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .nav-icons i:hover {
+            color: #4caf50;
+        }
+
+        .back-btn {
+            color: #ffffff;
+            font-size: 18px;
+            margin-right: 10px;
+            text-decoration: none;
+            background-color: #4caf50;
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            flex: 1;
+            margin: 10px;
+        }
+
+        .card h2 {
+            color: #4caf50;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card a {
+            color: #78c778;
+            text-decoration: none;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 250px;
+        }
+
+        /* Flexbox for horizontal alignment */
+        .card-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            color: #777;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #1e1e1e;
+            border-top: 1px solid #333;
+        }
+
+        /* Enhancements for laptop screens */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 1200px;
+            }
+
+            .card-container {
+                flex-wrap: nowrap;
+            }
+        }
+
+        /* Header styles */
+        h1 {
+            text-align: center;
+            color: #78c778;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section with Logo, Back Button, and Navigation Icons -->
+    <div class="main-header">
+        <div class="logo-container">
+            <a href="services.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            
+        </div>
+        <div class="nav-icons">
+            
+            <a href="settings.html" title="Settings">
+                <i class="fas fa-cog"></i></a>
+            <a href="profile.html" title="Profile">
+                <i class="fas fa-user-circle"></i></a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Statistics</h1>
+
+        <!-- Cards aligned horizontally -->
+        <div class="card-container">
+            <div class="card">
+                <h2>Steps Trend</h2>
+                <div class="chart-container">
+                    <canvas id="stepsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Calories Burned</h2>
+                <div class="chart-container">
+                    <canvas id="caloriesChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Water Intake</h2>
+                <div class="chart-container">
+                    <canvas id="waterChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <script>
+        // Sample data for the charts (replace with actual data)
+        const stepsData = {
+            labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+            values: [10000, 12000, 9000, 13000, 11000, 14000, 15000]
+        };
+
+        const caloriesData = {
+            labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+            values: [500, 600, 450, 700, 550, 750, 800]
+        };
+
+        const waterData = {
+            labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+            values: [2.0, 2.5, 1.5, 3.0, 2.2, 3.2, 3.5]
+        };
+
+        // Function to create a chart
+        function createChart(canvasId, data, label) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: label,
+                        data: data.values,
+                        backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                        borderColor: 'rgba(76, 175, 80, 1)',
+                        borderWidth: 1,
+                        tension: 0.4 // Smooth the line
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false, // Hide the legend
+                        },
+                        title: {
+                            display: true,
+                            text: label,
+                            color: '#78c778' // Title color
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create charts
+        createChart('stepsChart', stepsData, 'Steps');
+        createChart('caloriesChart', caloriesData, 'Calories Burned');
+        createChart('waterChart', waterData, 'Water Intake (Liters)');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - FITEX</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Blurred background effect */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("{{ url_for('static', filename='images/about_img.png') }}");
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px); /* Adjust blur strength */
+            z-index: -1;
+        }
+
+        /* Sign In Container */
+        .signin-container {
+            background-color: rgba(34, 34, 34, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            width: 400px;
+            text-align: center;
+            margin-top: 100px;
+            position: relative;
+            z-index: 1; /* Ensure it's above the blurred background */
+        }
+
+        .signin-container h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #fdd835;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
+        .form-group input:focus {
+            border-color: #fdd835;
+            outline: none;
+        }
+        .cta {
+            background-color: #fdd835;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+            width: 100%;
+        }
+        .cta:hover {
+            background-color: #ffc107;
+        }
+        .signup-link, .home-link {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .signup-link a, .home-link a {
+            color: #fdd835;
+            text-decoration: none;
+        }
+        .signup-link a:hover, .home-link a:hover {
+            text-decoration: underline;
+        }
+        .form-group input[type="checkbox"] {
+            transform: scale(1.2);
+            accent-color: #fdd835;
+        }
+        .form-check-input {
+            width: 16px;
+            height: 16px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="signin-container">
+        <h2>Sign In</h2>
+        <div id="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+          </div>
+          
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">New Password</label>
+                <input type="password" id="password" name="password" placeholder="Your Password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Re-Enter Password</label>
+                <input type="password" id="password" name="password" placeholder="Your Password" required>
+            </div>
+            
+            
+            
+       <button type="submit" class="cta" style="margin-top: 20px;">Submit</button>
+
+        
+
+        
+        
+    </div>
+    <script>
+        // If the URL contains ?refresh=true, force a full page reload
+        if (window.location.search.includes("refresh=true")) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+            window.location.reload(true);  // Forces a hard reload
+        }
+
+        setTimeout(() => {
+            const flashMessages = document.getElementById('flash-messages');
+            if (flashMessages) {
+            flashMessages.style.display = 'none';
+            }
+        }, 3000);
+
+    </script>
+    
+    
+</body>
+</html>

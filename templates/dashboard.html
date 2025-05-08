@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <title>Dashboard - FITEX</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+  <link rel="stylesheet" href="https://rawgit.com/LeshikJanz/libraries/master/Bootstrap/baguetteBox.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}" type="image/gif" />
+
+  <!-- Smooth Scroll -->
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+
+<body class="main-layout">
+  <!-- Loader -->
+  <div class="loader_bg">
+    <div class="loader"><img src="{{ url_for('static', filename='images/loading.gif') }}" alt="Loading" /></div>
+  </div>
+  <!-- End Loader -->
+
+  <div class="full_bg">
+    <!-- Header -->
+    <header class="header-area">
+      <div class="container-fluid">
+        <div class="row d_flex">
+          <div class="col-md-3 col-sm-3">
+            <div class="logo">
+              <a href="{{ url_for('home') }}">Fitex</a>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-9">
+            <div class="navbar-area">
+              <nav class="site-navbar">
+                <ul>
+                  <li><a href="{{ url_for('home') }}">Home</a></li>
+                  {% if user_email == 'mitdesai9118@gmail.com' %}
+                  <li><a href="{{ url_for('users') }}">Admin</a></li>
+                  {% endif %}
+                
+                  <li><a href="{{ url_for('about') }}">About</a></li>
+                  <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                  <li><a class="active" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                
+                
+                
+                  <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+                
+                <button class="nav-toggler">
+                  <span></span>
+                </button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Dashboard Banner -->
+    <div id="dashboard-banner" class="carousel slide slider_main">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="container">
+            <div class="carousel-caption relative">
+              <div class="row d_flex">
+                <div class="col-md-9">
+                  <div class="creative">
+                    <h1>Welcome, {{ name }}!</h1>
+                    <p>Your fitness journey starts here. Explore your dashboard to track progress, set goals, and more.</p>
+                    <a class="read_more" href="#services-section">Explore Services</a>
+                    <a class="read_more" href="{{ url_for('settings') }}">View Profile</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Dashboard Banner -->
+  </div>
+
+  <!-- Dashboard Content -->
+  <div class="classes" id="services-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="titlepage text_align_center">
+            <h2></h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="white_bg">
+            <div class="row">
+              <div class="col-md-4">
+                <div id="ho_heal" class="our_class text_align_center">
+                  <i class="d_no"><img src="{{ url_for('static', filename='images/cho3.3.png') }}" alt="Progression" /></i>
+                  <i class="d_bo"><img src="{{ url_for('static', filename='images/cho3.png') }}" alt="Progression" /></i>
+                  <h3>Progression</h3>
+                  <p>Track your fitness progress over time.</p>
+                  <a class="read_more" href="{{ url_for('setgl') }}">View Progress</a>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div id="ho_heal" class="our_class text_align_center">
+                  <i class="d_no"><img src="{{ url_for('static', filename='images/cho2.png') }}" alt="Workout" /></i>
+                  <i class="d_bo"><img src="{{ url_for('static', filename='images/cho2.2.png') }}" alt="Workout" /></i>
+                  <h3>Workouts</h3>
+                  <p>Set and manage your workout goals.</p>
+                  <a class="read_more" href="{{ url_for('goalset') }}">Set Goals</a>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div id="ho_heal" class="our_class text_align_center">
+                  <i class="d_no"><img src="{{ url_for('static', filename='images/cho1.png') }}" alt="Nutrition" /></i>
+                  <i class="d_bo"><img src="{{ url_for('static', filename='images/cho1.1.png') }}" alt="Nutrition" /></i>
+                  <h3>Nutrition</h3>
+                  <p>Plan your meals and track calories.</p>
+                  <a class="read_more" href="{{ url_for('meal') }}">Meal Plans</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Dashboard Content -->
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer">
+      <div class="copyright">
+        <div class="container">
+          <div class="row d_flex">
+            <div class="col-md-8">
+              <p>© 2022 All Rights Reserved. Design by <a href="#">PRAROZ</a></p>
+            </div>
+            <div class="col-md-4">
+              <ul class="social_icon text_align_center">
+                <li><a href="javascript:void(0)"><i class="fa fa-facebook-f"></i></a></li>
+                <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="javascript:void(0)"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+                <li><a href="javascript:void(0)"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer -->
+
+  <!-- Bottom-to-Top Icon -->
+  <div class="bottom-to-top-icon" id="bottom-icon">
+    <i class="fa fa-arrow-up"></i>
+  </div>
+
+  <!-- JavaScript Files -->
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+
+  <!-- Bottom-to-Top Icon Script -->
+  <script>
+    const icon = document.getElementById('bottom-icon');
+    icon.addEventListener('click', function() {
+      icon.classList.toggle('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // Smooth scroll to top
+    });
+    window.onload = () => {
+      setTimeout(() => {
+        icon.classList.add('show');
+      }, 500);
+    };
+  </script>
+</body>
+</html>

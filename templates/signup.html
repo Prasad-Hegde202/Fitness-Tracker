@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - FITEX</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <style>
+        /* General Reset */
+                * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("{{ url_for('static', filename='images/about_img.png') }}") no-repeat center center/cover;
+            filter: blur(8px); /* Adjust blur intensity */
+            z-index: -1;
+        }
+
+       /* Sign Up Container */
+        .signup-container {
+            position: relative; /* Ensures it stays above the blurred background */
+            background-color: rgba(34, 34, 34, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            width: 430px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .signup-container h2 {
+            margin-bottom: 15px;
+            font-size: 22px; /* Slightly smaller font */
+            color: #fdd835;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .form-group input:focus {
+            border-color: #fdd835;
+            outline: none;
+        }
+
+        .cta {
+            background-color: #fdd835;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+            width: 100%;
+        }
+
+        .cta:hover {
+            background-color: #ffc107;
+        }
+
+        .login-link, .home-link {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .login-link a, .home-link a {
+            color: #fdd835;
+            text-decoration: none;
+        }
+
+        .login-link a:hover, .home-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Flash Message Styling */
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .alert-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .alert-info {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('signup') }}">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Your Password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+            </div>
+            
+            <button type="submit" class="cta">Sign Up</button>
+        </form>
+        
+        <div class="login-link">
+            Already have an account? <a href="{{ url_for('login') }}">Sign In</a>
+        </div>
+        <div class="home-link">
+            Go back to <a href="{{ url_for('home') }}">Home</a>
+        </div>
+    </div>
+</body>
+</html>

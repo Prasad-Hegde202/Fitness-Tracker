@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-section {
+            width: 40%;
+        }
+
+        .right-section {
+            width: 55%;
+            text-align: center;
+        }
+
+        .profile-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #0096c7;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .details {
+            margin-bottom: 20px;
+        }
+
+        .details p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        .details strong {
+            color: #333;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .social-icons i {
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .social-icons i:hover {
+            color: #0096c7;
+        }
+
+        .about-box {
+            background-color: #e76f51;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            text-align: center;
+        }
+
+        .about-box img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .about-box h2 {
+            margin-top: 50px;
+            font-size: 18px;
+        }
+
+        .about-box p {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .contact-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid #e76f51;
+            background: transparent;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #e76f51;
+        }
+
+        .contact-btn:hover {
+            background-color: #e76f51;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-section">
+            <h1 class="profile-title">Profile</h1>
+            <p class="subtitle">I'm a creative web developer</p>
+            
+            <div class="details">
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Phone:</strong> {{ user.phone }}</p>
+            </div>
+
+            <div class="social-icons">
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="about-box">
+                <img src="https://i.pravatar.cc/80" alt="Profile Picture">
+                <h2>HELLO, I'M PATRYCJA</h2>
+                <p>I am a versatile graphic designer who can approach marketing projects from concept to implementation.</p>
+                <div class="social-icons">
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-linkedin"></i>
+                </div>
+            </div>
+
+            <button class="contact-btn">CONTACT ME</button>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

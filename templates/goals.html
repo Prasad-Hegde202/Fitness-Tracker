@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Fitness Goals</title>
+    <style>
+   /* General Styles */
+   body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            color: #333;
+        }
+        table {
+            width: 80%;
+            border-collapse: separate; /* Allows border-radius to work */
+            border-spacing: 0;
+            border-radius: 10px;
+            overflow: hidden; /* Ensures rounded corners apply */
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 150px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:last-child td:first-child {
+            border-bottom-left-radius: 10px;
+        }
+        tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
+        }
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn-back {
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    </style>
+</head>
+<body>
+
+    <h2>Fitness Goals for <span id="user-name"></span></h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Activity</th>
+                <th>Distance (mi)</th>
+                <th>Steps</th>
+                <th>Calories</th>
+            </tr>
+        </thead>
+        <tbody id="goals-table">
+            <tr><td colspan="4">Loading...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('user_id');
+            const userName = urlParams.get('user_name');
+
+            document.getElementById("user-name").textContent = userName || "User";
+
+            fetch(`/view_goals?user_id=` + userId)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById("goals-table");
+
+                    if (data.error) {
+                        tableBody.innerHTML = `<tr><td colspan="4">Error: ${data.error}</td></tr>`;
+                    } else if (data.message) {
+                        tableBody.innerHTML = `<tr><td colspan="4">${data.message}</td></tr>`;
+                    } else if (data.length === 0) {
+                        tableBody.innerHTML = `<tr><td colspan="4">No goals available.</td></tr>`;
+                    } else {
+                        tableBody.innerHTML = data.map(goal => 
+                            `<tr>
+                                <td>${goal.activity}</td>
+                                <td>${goal.distance}</td>
+                                <td>${goal.steps}</td>
+                                <td>${goal.calories}</td>
+                            </tr>`
+                        ).join('');
+                    }
+                })
+                .catch(error => {
+                    console.error("⚠️ Error fetching goals:", error);
+                    document.getElementById("goals-table").innerHTML = `<tr><td colspan="4">Failed to load goals.</td></tr>`;
+                });
+        });
+    </script>
+
+</body>
+</html>

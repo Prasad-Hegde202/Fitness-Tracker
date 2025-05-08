@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Goal Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 500px;
+            background-color: #1e1e1e;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        .activity-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .activity-buttons button {
+            width: 30%;
+            padding: 15px;
+            border: none;
+            background-color: #333;
+            color: #8bc34a;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .activity-buttons button:hover {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .input-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        label {
+            font-size: 18px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            margin-top: 5px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .buttons button {
+            width: 110%;
+            padding: 15px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+            margin-left: 50px;
+            margin-right: 60px;
+        }
+
+        .save-btn {
+            background-color: #689f38;
+            color: #fff;
+        }
+
+        .see-btn {
+            background-color: #ff9800;
+            color: #fff;
+        }
+
+        .save-btn:hover {
+            background-color: #558b2f;
+        }
+
+        .see-btn:hover {
+            background-color: #e68900;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Set Your Fitness Goal</h2>
+        <div class="activity-buttons">
+            <button onclick="setActivity('Walking')">🚶 Walking</button>
+            <button onclick="setActivity('Running')">🏃 Running</button>
+            <button onclick="setActivity('Cycling')">🚴 Cycling</button>
+        </div>
+        <p><strong>Activity:</strong> <span id="activity">Walking</span></p>
+        <div class="input-group">
+            <label>Distance (mi):</label>
+            <input type="number" id="distance" value="5">
+        </div>
+        <div class="input-group">
+            <label>Steps:</label>
+            <input type="number" id="steps" value="5000">
+        </div>
+        <div class="input-group">
+            <label>Calories:</label>
+            <input type="number" id="calories" value="400">
+        </div>
+        <div class="buttons">
+            <button class="save-btn" onclick="saveGoal()">Save</button>
+        </div>
+    </div>
+    
+    <script>
+        function setActivity(activity) {
+            document.getElementById("activity").textContent = activity;
+        }
+
+        function saveGoal() {
+            const activity = document.getElementById("activity").textContent;
+            const distance = document.getElementById("distance").value;
+            const steps = document.getElementById("steps").value;
+            const calories = document.getElementById("calories").value;
+
+            fetch("/save_goal", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ activity, distance, steps, calories })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        }
+
+        function viewGoals() {
+            window.location.href = "/admin_goals";  // Redirects to Admin View Page
+        }
+    </script>
+</body>
+</html>
